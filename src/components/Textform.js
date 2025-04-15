@@ -22,7 +22,18 @@ export default function TextForm(props) {
         console.log("Capitalize was clicked");
         let newText = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
         setText(newText);
-    };    
+    };  
+    const handleCopy = ()=>{
+        console.log("Copy was clicked");
+        let myBox = document.getElementById("MyBox");
+        myBox.select();
+        navigator.clipboard.writeText(myBox.value);
+    };
+    const handleExtraSpace = ()=>{
+        console.log("Extra space was clicked");
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "));
+    };  
     const handleOnChange = (event)=>{
         console.log("handle on change");
         setText(event.target.value); 
@@ -35,12 +46,14 @@ export default function TextForm(props) {
     <div className='container'>
         <div className="mb-3 my-3">
             <h1 >{props.head} </h1>
-            <textarea className="form-control" value={text} onChange={handleOnChange} id="MyBox" rows="8"></textarea>
+            <textarea className="form-control" value={text} onChange={handleOnChange} id="MyBox" rows="8" ></textarea>
         </div>
         <button className='btn btn-secondary mx-2 my-2' onClick={handleUpClick} >Convert to Uppercase</button>
         <button className='btn btn-secondary mx-2 my-2' onClick={handleLwClick} >Convert to Lowercase</button>
         <button className='btn btn-secondary mx-2 my-2' onClick={handleClearTextClick} >Clear Text</button>
         <button className='btn btn-secondary mx-2 my-2' onClick={handleCapitalizeClick} >Capitalize </button>
+        <button className='btn btn-secondary mx-2 my-2' onClick={handleCopy} >Copy Text</button>
+        <button className='btn btn-secondary mx-2 my-2' onClick={handleExtraSpace} >Remove Extra Space</button>
     </div>
     <div className="container my-3">
         <h2>
@@ -51,6 +64,12 @@ export default function TextForm(props) {
         </p>
         <p>
            It will take {(0.08)*text.split(" ").length} minutes to read.
+        </p>
+        <h2>
+            Preview
+        </h2>
+        <p>
+            {text.length>0? text:"Enter Something to Analyse."}
         </p>
     </div>
     </>
